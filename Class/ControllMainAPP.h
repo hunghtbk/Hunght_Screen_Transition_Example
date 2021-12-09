@@ -14,6 +14,7 @@ public:
     static ControllMainAPP* getInstance();
 
     void displayScreen(ScreenNameDefine nameScreen);
+    void setPropertyHMI(QString objectName, QString propertyHMI, QString data);
 private:
     ControllMainAPP();
     static ControllMainAPP *m_instance;

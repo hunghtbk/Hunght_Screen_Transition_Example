@@ -30,6 +30,21 @@ void ControllMainAPP::displayScreen(ScreenNameDefine nameScreen)
     } else {
         qDebug() << "Not found";
     }
+
+    //Set propery:
+    setPropertyHMI("current_time_lable", "text", "15:15:15");
+}
+
+void ControllMainAPP::setPropertyHMI(QString objectName, QString propertyHMI, QString data)
+{
+    QObject *rootObject = m_qmlEngine.rootObjects().first();
+    QObject *qmlObject = rootObject->findChild<QObject*>(objectName);
+    if (qmlObject) {
+        qDebug() << "Starting to set objectName " << objectName << ", property " << propertyHMI << ", data " <<  data;
+        qmlObject->setProperty(propertyHMI.toLocal8Bit().data(), data);
+    } else {
+        qDebug() << "Not found";
+    }
 }
 
 ControllMainAPP::ControllMainAPP()

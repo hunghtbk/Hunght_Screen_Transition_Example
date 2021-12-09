@@ -5,5 +5,6 @@
         <file>QML/Screen2.qml</file>
         <file>QML/Screen3.qml</file>
         <file>QML/Screen4.qml</file>
+        <file>QML/Screen2ListDelegate.qml</file>
     </qresource>
 </RCC>
