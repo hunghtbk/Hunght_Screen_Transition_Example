@@ -1,5 +1,6 @@
 #include "ControllMainAPP.h"
 #include <QDebug>
+#include <QQmlComponent>
 
 ControllMainAPP* ControllMainAPP::m_instance = nullptr;
 void ControllMainAPP::initControlMainApp()
@@ -82,6 +83,13 @@ void ControllMainAPP::handleHMIEvent(QString currentScreen, QString event)
             displayScreen(HN_SCREEN3);
         } else if (event == "Back2") {
             displayScreen(HN_SCREEN1);
+        } else if (event == "Scroll_up" || event == "Scroll_down") {
+            QObject * object = m_qmlEngine.rootObjects().value(0);
+            QVariant returnedValue;
+            QVariant msg = event;
+            QMetaObject::invokeMethod(object, "callFunctionFromCPlus",
+                                      Q_RETURN_ARG(QVariant, returnedValue),
+                                      Q_ARG(QVariant, msg));
         }
     } else if(currentScreen == "HN_SCREEN3") {
         if (event == "Next3") {

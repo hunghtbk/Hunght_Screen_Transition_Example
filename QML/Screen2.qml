@@ -6,6 +6,8 @@ Item {
     width: 640
     height: 480
 
+
+
     Text {
         id: hunght2
         anchors.centerIn: parent
@@ -72,38 +74,38 @@ Item {
                 source2: ""// cái này truyền ảnh vào nhé
                 source3: ""// cái này truyền ảnh vào nhé
                 textContent1: "hunght1"
-                textContent2: "hunght2"
-                textContent3: "hunght3"
-                textContent4: "hunght4"
+                textContent2: "hunght1"
+                textContent3: "hunght1"
+                textContent4: "hunght1"
             }
 
             ListElement {
                 source1: ""// cái này truyền ảnh vào nhé
                 source2: ""// cái này truyền ảnh vào nhé
                 source3: ""// cái này truyền ảnh vào nhé
-                textContent1: "hunght1"
+                textContent1: "hunght2"
                 textContent2: "hunght2"
-                textContent3: "hunght3"
-                textContent4: "hunght4"
+                textContent3: "hunght2"
+                textContent4: "hunght2"
             }
 
             ListElement {
                 source1: ""// cái này truyền ảnh vào nhé
                 source2: ""// cái này truyền ảnh vào nhé
                 source3: ""// cái này truyền ảnh vào nhé
-                textContent1: "hunght1"
-                textContent2: "hunght2"
+                textContent1: "hunght3"
+                textContent2: "hunght3"
                 textContent3: "hunght3"
-                textContent4: "hunght4"
+                textContent4: "hunght3"
             }
 
             ListElement {
                 source1: ""// cái này truyền ảnh vào nhé
                 source2: ""// cái này truyền ảnh vào nhé
                 source3: ""// cái này truyền ảnh vào nhé
-                textContent1: "hunght1"
-                textContent2: "hunght2"
-                textContent3: "hunght3"
+                textContent1: "hunght4"
+                textContent2: "hunght4"
+                textContent3: "hunght4"
                 textContent4: "hunght4"
             }
         }
@@ -117,6 +119,61 @@ Item {
                         radius: 10
                     }
                 }
+
+        onContentYChanged: {
+            console.log(contentY)
+        }
     }
 
+    Rectangle {
+        width:  100
+        height: 50
+        radius: 5
+        x: 90
+        y: 100
+        color: "yellow"
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                UIBridge.sendEvent("HN_SCREEN2", "Scroll_up");
+            }
+        }
+    }
+
+    Rectangle {
+        width:  100
+        height: 50
+        radius: 5
+        x: 90
+        y: 200
+        color: "brown"
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                UIBridge.sendEvent("HN_SCREEN2", "Scroll_down");
+            }
+        }
+    }
+
+    function receivedSignalFromMainQML(msg){
+        console.log("Got message from main.qml:", msg)
+        if (msg === "Scroll_up") {
+            if (listItem.contentY === listItem.contentHeight - listItem.height) {
+                console.log("scrolled to bottom");
+            } else {
+                listItem.contentY = listItem.contentY + 50
+            }
+        } else if (msg === "Scroll_down") {
+            listItem.contentY = listItem.contentY - 50
+            if (listItem.contentY < 0) {
+                listItem.contentY = 0
+            }
+        } else {
+            console.log("Unresolve event")
+        }
+
+        return "some return value"
+    }
 }
